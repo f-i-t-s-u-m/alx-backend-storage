@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`id` int(11) AUTO_INCREMENT,
 	`email` varchar(255) not null unique,
 	`name` varchar(255),
-	`country` enum('US', 'CO', 'TN') default('USI'),
+	`country` enum('US', 'CO', 'TN') default('US') not null,
 	PRIMARY KEY(`id`)
 	)
