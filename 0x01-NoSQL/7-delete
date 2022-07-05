@@ -1,1 +1,2 @@
+// delete collection 
 db.school.deleteOne({name : 'Holberton school'})
