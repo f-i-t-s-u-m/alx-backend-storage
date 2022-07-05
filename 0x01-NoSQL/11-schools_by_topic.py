@@ -6,5 +6,5 @@
 
 def schools_by_topic(mongo_collection, topic):
     """ filter schools by topic """
-    db = mongo_collection.find({'topic': {'$in': list(topic)}})
-    return db
+    db = mongo_collection.find({'topics': topic})
+    return [x for x in db]
