@@ -1,0 +1,2 @@
+// find school with the name 
+db.school.find({name:'Holberton school'}).pretty()
