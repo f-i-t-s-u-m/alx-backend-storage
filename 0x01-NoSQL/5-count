@@ -1,0 +1,2 @@
+// count collection
+db.school.count()
