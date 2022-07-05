@@ -9,4 +9,4 @@ topics (list of strings) will be the list of topics approached in the school """
 
 def update_topics(mongo_collection, name, topics):
     """ update topic function """
-    mongo_collection.update_many({'name': name}, {'$push': {'topics':topics}})
+    mongo_collection.update_many({'name': name}, {'$set': {'topics':topics}})
