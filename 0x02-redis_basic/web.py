@@ -14,11 +14,12 @@ def counter(fn: Callable) -> Callable:
     @wraps(fn)
     def inner(url):
         """ inner decorator function """
-        html = red.get(f'count:{url}')
+        red.incr(f'count:{url}')
+        html = red.get(f'cached:{url}')
         if (html):
             return html.decode('utf-8')
         html = fn(url)
-        red.setex(f'count:{url}', 10, html)
+        red.setex(f'cached:{url}', 10, html)
         return html
     return inner
 
