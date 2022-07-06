@@ -30,7 +30,7 @@ def call_history(method: Callable) -> Callable:
     return inner
 
 
-def replay(call: Callable) -> str:
+def replay(call: Callable):
     """ replay history of functions """
     red = Redis()
     res = red.get(call.__qualname__)
