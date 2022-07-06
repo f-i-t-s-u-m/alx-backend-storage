@@ -8,6 +8,16 @@ from functools import wraps
 from typing import Callable, List, Union, Optional
 
 
+def count_calls(method: Callable) -> Callable:
+    """ decorator for method """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """ wrapper for the decorator """
+        self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+    return wrapper
+
+
 class Cache():
     """ cache class """
     _redis = Redis()
@@ -15,15 +25,6 @@ class Cache():
     def __init__(self):
         """ init the cache instance """
         self._redis.flushdb()
-
-    def count_calls(method: Callable) -> Callable:
-        """ decorator for method """
-        @wraps(method)
-        def wrapper(self, *args, **kwargs):
-            """ wrapper for the decorator """
-            self._redis.incr(method.__qualname__)
-            return method(self, *args, **kwargs)
-        return wrapper
 
     @count_calls
     def store(self, data: Union[str, bytes, int, List]) -> str:
