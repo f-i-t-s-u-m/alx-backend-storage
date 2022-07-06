@@ -20,10 +20,10 @@ def count_calls(method: Callable) -> Callable:
 
 class Cache():
     """ cache class """
-    _redis = Redis()
 
     def __init__(self):
         """ init the cache instance """
+        self._redis = Redis()
         self._redis.flushdb()
 
     @count_calls
