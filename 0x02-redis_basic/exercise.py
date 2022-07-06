@@ -3,7 +3,7 @@
 
 
 import redis
-from uuid import uuid4
+import uuid
 from functools import wraps
 from typing import Callable, List, Union, Optional
 
@@ -57,7 +57,7 @@ class Cache():
     @count_calls
     def store(self, data: Union[str, bytes, int, List]) -> str:
         """ store data to redis """
-        id = str(uuid4())
+        id = str(uuid.uuid4())
         self._redis.set(id, data)
         return id
 
