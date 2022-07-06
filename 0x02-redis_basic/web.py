@@ -3,11 +3,11 @@
 
 
 import requests
-from redis import Redis
+import redis
 from typing import Callable
 from functools import wraps
 
-red = Redis()
+red = redis.Redis()
 
 
 def counter(fn: Callable) -> Callable:

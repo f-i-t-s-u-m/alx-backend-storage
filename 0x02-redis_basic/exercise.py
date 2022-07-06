@@ -45,7 +45,7 @@ def replay(call: Callable):
         print(f'{cname}(*{i.decode("utf-8")}) -> {o.decode("utf-8")}')
 
 
-class Cache():
+class Cache:
     """ cache class """
 
     def __init__(self):
