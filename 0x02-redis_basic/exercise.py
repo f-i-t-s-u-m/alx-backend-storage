@@ -18,6 +18,18 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def call_history(method: Callable) -> Callable:
+    """ history decorator """
+    @wraps(method)
+    def inner(self, *args: Union[str, bytes, int, List]) -> Callable:
+        """ inner function to hold external function """
+        self._redis.rpush(f'{method.__qualname__}:inputs', str(args))
+        data = method(self, *args)
+        self._redis.lpush(f'{method.__qualname__}:outputs', str(data))
+        return data
+    return inner
+
+
 class Cache():
     """ cache class """
 
@@ -26,6 +38,7 @@ class Cache():
         self._redis = Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, List]) -> str:
         """ store data to redis """
