@@ -50,7 +50,7 @@ class Cache():
 
     def __init__(self):
         """ init the cache instance """
-        self._redis = redis.Redis(host="localhost", port=6379)
+        self._redis = Redis()
         self._redis.flushdb()
 
     @call_history
