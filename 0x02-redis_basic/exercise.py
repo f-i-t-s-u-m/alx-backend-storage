@@ -30,6 +30,21 @@ def call_history(method: Callable) -> Callable:
     return inner
 
 
+def replay(call: Callable) -> str:
+    """ replay history of functions """
+    red = Redis()
+    res = red.get(call.__qualname__)
+    cname = str(call.__qualname__)
+    di = red.lrange(f'{cname}:inputs', 0, -1)
+    do = red.lrange(f'{cname}:outputs', 0, -1)
+    if (res is None):
+        res = 0
+    print(f'{call.__qualname__} was called {int(res)} times:')
+
+    for i, o in zip(di, do):
+        print(f'{cname}(*{i.decode("utf-8")}) -> {o.decode("utf-8")}')
+
+
 class Cache():
     """ cache class """
 
