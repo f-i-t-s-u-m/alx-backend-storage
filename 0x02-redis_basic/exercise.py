@@ -21,11 +21,11 @@ def count_calls(method: Callable) -> Callable:
 def call_history(method: Callable) -> Callable:
     """ history decorator """
     @wraps(method)
-    def inner(self, *args: Union[str, bytes, int, List]) -> Callable:
+    def inner(self, *args):
         """ inner function to hold external function """
         self._redis.rpush(f'{method.__qualname__}:inputs', str(args))
         data = method(self, *args)
-        self._redis.lpush(f'{method.__qualname__}:outputs', str(data))
+        self._redis.rpush(f'{method.__qualname__}:outputs', str(data))
         return data
     return inner
 
