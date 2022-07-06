@@ -2,7 +2,7 @@
 """ python3 with redis db """
 
 
-from redis import Redis
+import redis
 from uuid import uuid4
 from functools import wraps
 from typing import Callable, List, Union, Optional
@@ -32,7 +32,7 @@ def call_history(method: Callable) -> Callable:
 
 def replay(call: Callable):
     """ replay history of functions """
-    red = Redis()
+    red = redis.Redis()
     res = red.get(call.__qualname__)
     cname = str(call.__qualname__)
     di = red.lrange(f'{cname}:inputs', 0, -1)
@@ -50,7 +50,7 @@ class Cache():
 
     def __init__(self):
         """ init the cache instance """
-        self._redis = Redis()
+        self._redis = redis.Redis()
         self._redis.flushdb()
 
     @call_history
